@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// this configures our database connections
 $GLOBALS['config'] = array(
 		'mysql' => array(
 				'host' => '127.0.0.1',
