@@ -92,6 +92,49 @@ class DB{
 		return $this->_results;
 	}
 
+	public function insert($string, $arr = array()){
+		// string = table, arr = fields
+		if(count($arr)){
+			$kys = array_keys($arr);
+			$val = '';
+			$cnt = 1;
+
+			foreach($arr as $ar) {
+				$val .= '?';
+				if($cnt<count($arr)){
+					$val .= ', ';
+				}
+				$cnt++;
+			}
+
+			$sql = "INSERT INTO users (`". implode('`, `', $kys) . "`) VALUES ({$val})";
+			
+			if(!$this->query($sql, $arr)->error()) {
+				return true;
+			}
+		}
+		return false;
+    }
+
+    public function update($string, $id, $fields){
+    	$set = '';
+    	$x = 1;
+
+    	foreach ($fields as $name => $value) {
+    		$set .= "{$name} = ?";
+    		if($x < count($fields)) {
+    			$set .= ', ';
+    		}
+    		$x++;
+    	}
+    	$sql = "UPDATE {$string} SET {$set} WHERE id = {$id}";
+    	
+    	if(!$this->query($sql, $fields)->error()){
+    		return true;
+    	}
+    	return false;
+    }
+
 	// returns the first value of results
 	public function first() {
 		return $this->results()[0];

@@ -37,7 +37,21 @@ require_once 'core/init.php';
     			// an example is whenever we use DB::getInstance()->getAction()
 				$user = DB::getInstance()->getAction('users', array('username', '=', 'Simple'));
 				$allUsers = DB::getInstance()->query("SELECT * FROM users");
+                /*
+                $insert = DB::getInstance()->insert('users', array(
+                        'username' => 'john',
+                        'password' => 'doe',
+                        'salt' => 'salt'
+                    ));
+                */
+                $insert = DB::getInstance()->update('users', 3, array(
+                        'password' => 'newpass'
+                    ));
 
+                if($insert){
+                    echo 'update completed successfully';
+                }
+                /*
 				if(!$user->count()){
 					// if the query has no match
 					echo 'No user found';
@@ -52,7 +66,7 @@ require_once 'core/init.php';
 
 					// we could also do
 					//echo $allUsers->first()->username;
-				}
+				} */
     		?>
     	</div>
     </body>
